@@ -13,7 +13,7 @@ song1Data = [120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 13
              ] # the y coordinates for each note (0 means there won't be a circle drawn)
 song1Data.reverse() # the array is reversed so that the circles are read left to right
 
-
+#change this to chnage the max breath obv. 150 is basically the minimum for song1 if you want to be able to play all the notes completely.
 startingBreath = 150
 
 
@@ -56,6 +56,7 @@ def draw():
         if i != 0: #any entries that are 0 just won't show a circle
             circle(circleX, i, 20) #draw the circle. i is the y coordinate.
             currentFrameCircleYCoordinates[circleX] = int(i) # fill a dictionary with the y and x position of each circle
+            #I have that dictionary so that I can check if the red circle "cursor" thingy is on top of a note in the mousePressed section
             # a dictionary entry would look like currentFrameCircleYCoordinates[x] = [y]
         x += 2 #move the next circle to the left a little
 
@@ -64,7 +65,7 @@ def draw():
     x += 2 # the circles will slowly go across the screen
     
     #if mouse is pressed, the circle will be red, the breath meter will drain and the score will increase assuming a note is also wherever the red circle is. 
-    #otherwise the circle will be blue and the breath will reset. 
+    #otherwise the circle will be blue and the breath will reset (assuming not in a gameover state). 
     if mousePressed:
     
         fill (255,0,0) 
