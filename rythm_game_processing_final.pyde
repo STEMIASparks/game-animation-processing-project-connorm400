@@ -8,7 +8,8 @@ song1Data = [120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 13
              130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130,
              130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130,
              130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 
-             130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130,
+             130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 130, 0,0,0,0,0,0,0,0,0,0,0,0,
+             0,0, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150, 150,
              ] # the y coordinates for each note (0 means there won't be a circle drawn)
 song1Data.reverse() # the array is reversed so that the circles are read left to right
 
@@ -18,11 +19,11 @@ startingBreath = 150
 
 def setup():
     global trombone, x, score, breath, startingBreath, song1Data, highScore
-    size (700,700)
+    size (700,700) #the window is 700x700 pixels
     frameRate(60) #mostly runs at 60 fps. having an image as a bakground makes it runs slower sometimes.
     noCursor() #doesn't show the cursor I mean why not
     
-    textFont(loadFont("ComicSansMS.vlw"))
+    textFont(loadFont("ComicSansMS.vlw")) #comic sans's vlw file is in the data folder. generated w/ the processing create font tool
     textSize(32)
     
     trombone = loadImage("trombone.jpg") #trombone.jpg is located in this project's data folder.
@@ -39,7 +40,7 @@ def draw():
     image(trombone, 0,0,700,700) #trombone acts as the backgroung (its stretched to be 700, 700
     
     stroke(10) #you need to enable stroke, make a line and then disable stroke for the line to be visible
-    line(50,0,50,700)
+    line(50,0,50,700) #this is the bar on the left side
     noStroke()
     
 
@@ -51,20 +52,22 @@ def draw():
     
     
     for i in song1Data: #for each entry in the song1Data array, run this 
-        circleX = 700+(2*len(song1Data))-x #circles' x coordinate should start at the right side of the screen. I have the (2*len(song1Data)) so that the song will always start at the end regardless of the song size
+        circleX = 700+(2*len(song1Data))-x #circles' x coordinate should start at the right side of the screen. I have the (2*len(song1Data)) so that the song will always start at the end regardless of the song size. The 2* part is because x icrements by 2
         if i != 0: #any entries that are 0 just won't show a circle
-            circle(circleX, i, 20)
+            circle(circleX, i, 20) #draw the circle. i is the y coordinate.
             currentFrameCircleYCoordinates[circleX] = int(i) # fill a dictionary with the y and x position of each circle
             # a dictionary entry would look like currentFrameCircleYCoordinates[x] = [y]
-        x += 2
-        #move the next circle to the left
+        x += 2 #move the next circle to the left a little
 
+    #the next two lines are there so that on each frame the notes will only move 2 pixels to the left
     x -= 2* len(song1Data) #reset x to what it was before the for loop
     x += 2 # the circles will slowly go across the screen
     
-    
+    #if mouse is pressed, the circle will be red, the breath meter will drain and the score will increase assuming a note is also wherever the red circle is. 
+    #otherwise the circle will be blue and the breath will reset. 
     if mousePressed:
-        fill (255,0,0)
+    
+        fill (255,0,0) 
         circle(50, mouseY, 30)
         breath -=1 
     
