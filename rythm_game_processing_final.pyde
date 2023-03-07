@@ -15,7 +15,7 @@ song1Data.reverse() # the array is reversed so that the circles are read left to
 
 #change this to chnage the max breath obv. 150 is basically the minimum for song1 if you want to be able to play all the notes completely.
 startingBreath = 150
-
+performanceMode = False
 
 def setup():
     global trombone, x, score, breath, startingBreath, song1Data, highScore
@@ -36,8 +36,10 @@ def setup():
 def draw():
     global song1Data, x, score, trombone, breath, startingBreath, highScore
     currentFrameCircleYCoordinates = {} # declare the array now so that it resets with each draw() loop
-    #background(255,255,255) 
-    image(trombone, 0,0,700,700) #trombone acts as the backgroung (its stretched to be 700, 700
+    if performanceMode == True:
+        background(255,255,255) 
+    else:
+        image(trombone, 0,0,700,700) #trombone acts as the backgroung (its stretched to be 700, 700
     
     stroke(10) #you need to enable stroke, make a line and then disable stroke for the line to be visible
     line(50,0,50,700) #this is the bar on the left side
