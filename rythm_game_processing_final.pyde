@@ -71,7 +71,7 @@ def draw():
     
         for currentCircleX, currentCircleY in currentFrameCircleYCoordinates.items(): #for each row in the currentFrameCircleYCoordinates check if the X and Y coordinates are where the "cursor" is
                 if mouseY + 15 > currentCircleY > mouseY - 15 and 40 < currentCircleX < 60:
-                    score += 1            
+                    score += 1
     else:
         fill (0,0,255)
         circle(50, mouseY, 30)
@@ -96,6 +96,3 @@ def keyPressed():
         x = 0
         score = 0
         breath = startingBreath
-        
-    
-        
