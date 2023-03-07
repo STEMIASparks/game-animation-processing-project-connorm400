@@ -1,4 +1,3 @@
-
 song1Data = [120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 140, 140, 140, 140, 140, 140, 140, 
              140, 140, 140, 140, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
              0, 0, 0, 150, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 150, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -15,7 +14,7 @@ song1Data.reverse() # the array is reversed so that the circles are read left to
 
 #change this to chnage the max breath obv. 150 is basically the minimum for song1 if you want to be able to play all the notes completely.
 startingBreath = 150
-performanceMode = False
+performanceMode = False #enable this to make the game run more consistently at the cost of removing the background
 
 def setup():
     global trombone, x, score, breath, startingBreath, song1Data, highScore
@@ -45,13 +44,11 @@ def draw():
     line(50,0,50,700) #this is the bar on the left side
     noStroke()
     
-
     fill(0,0,0)
     text("High Score: " + str(highScore), 240, 40)
     text("score: " + str(score), 300, 600)
     text("breath: " + str(breath), 280, 630)
     text("press r to restart", 240, 670)
-    
     
     for i in song1Data: #for each entry in the song1Data array, run this 
         circleX = 700+(2*len(song1Data))-x #circles' x coordinate should start at the right side of the screen. I have the (2*len(song1Data)) so that the song will always start at the end regardless of the song size. The 2* part is because x icrements by 2
@@ -61,7 +58,6 @@ def draw():
             #I have that dictionary so that I can check if the red circle "cursor" thingy is on top of a note in the mousePressed section
             # a dictionary entry would look like currentFrameCircleYCoordinates[x] = [y]
         x += 2 #move the next circle to the left a little
-
     #the next two lines are there so that on each frame the notes will only move 2 pixels to the left
     x -= 2* len(song1Data) #reset x to what it was before the for loop
     x += 2 # the circles will slowly go across the screen
@@ -69,7 +65,6 @@ def draw():
     #if mouse is pressed, the circle will be red, the breath meter will drain and the score will increase assuming a note is also wherever the red circle is. 
     #otherwise the circle will be blue and the breath will reset (assuming not in a gameover state). 
     if mousePressed:
-    
         fill (255,0,0) 
         circle(50, mouseY, 30)
         breath -=1 
@@ -94,7 +89,6 @@ def draw():
     if score > highScore: #if the score is higher than the high Score, it becomes the high score
         highScore = score
         
-    
 def keyPressed():
     global x, score, breath, startingBreath, song1Data
     if key == "r":
