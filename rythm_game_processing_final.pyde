@@ -50,11 +50,11 @@ def draw():
     text("breath: " + str(breath), 280, 630)
     text("press r to restart", 240, 670)
     
-    for i in song1Data: #for each entry in the song1Data array, run this 
+    for note in song1Data: #for each entry in the song1Data array, run this 
         circleX = 700+(2*len(song1Data))-x #circles' x coordinate should start at the right side of the screen. I have the (2*len(song1Data)) so that the song will always start at the end regardless of the song size. The 2* part is because x icrements by 2
-        if i != 0: #any entries that are 0 just won't show a circle
-            circle(circleX, i, 20) #draw the circle. i is the y coordinate.
-            currentFrameCircleYCoordinates[circleX] = int(i) # fill a dictionary with the y and x position of each circle
+        if note != 0: #any entries that are 0 just won't show a circle
+            circle(circleX, note, 20) #draw the circle. i is the y coordinate.
+            currentFrameCircleYCoordinates[circleX] = int(note) # fill a dictionary with the y and x position of each circle
             #I have that dictionary so that I can check if the red circle "cursor" thingy is on top of a note in the mousePressed section
             # a dictionary entry would look like currentFrameCircleYCoordinates[x] = [y]
         x += 2 #move the next circle to the left a little
