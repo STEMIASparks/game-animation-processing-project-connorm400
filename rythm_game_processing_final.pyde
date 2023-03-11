@@ -17,7 +17,7 @@ startingBreath = 150
 performanceMode = False #enable this to make the game run more consistently at the cost of removing the background
 
 def setup():
-    global trombone, x, score, breath, startingBreath, song1Data, highScore
+    global trombone, score, breath, startingBreath, song1Data, highScore, drawLoopIncrement
     size (700,700) #the window is 700x700 pixels
     frameRate(60) #mostly runs at 60 fps. having an image as a bakground makes it runs slower sometimes.
     noCursor() #doesn't show the cursor I mean why not
@@ -27,13 +27,12 @@ def setup():
     
     trombone = loadImage("trombone.jpg") #trombone.jpg is located in this project's data folder.
     # reset/ declare variables
-    x = 0
     score = 0
     breath = startingBreath
     highScore = 0
-    
+    drawLoopIncrement = 0
 def draw():
-    global song1Data, x, score, trombone, breath, startingBreath, highScore
+    global song1Data, score, trombone, breath, startingBreath, highScore, drawLoopIncrement
     currentFrameCircleYCoordinates = {} # declare the array now so that it resets with each draw() loop
     if performanceMode == True:
         background(255,255,255) 
@@ -49,9 +48,9 @@ def draw():
     text("score: " + str(score), 300, 600)
     text("breath: " + str(breath), 280, 630)
     text("press r to restart", 240, 670)
-    
+    x = 0
     for note in song1Data: #for each entry in the song1Data array, run this 
-        circleX = 700+(2*len(song1Data))-x #circles' x coordinate should start at the right side of the screen. I have the (2*len(song1Data)) so that the song will always start at the end regardless of the song size. The 2* part is because x icrements by 2
+        circleX = 700+(2*len(song1Data))-x -drawLoopIncrement #circles' x coordinate should start at the right side of the screen. I have the (2*len(song1Data)) so that the song will always start at the end regardless of the song size. The 2* part is because x icrements by 2
         if note != 0: #any entries that are 0 just won't show a circle
             circle(circleX, note, 20) #draw the circle. i is the y coordinate.
             currentFrameCircleYCoordinates[circleX] = int(note) # fill a dictionary with the y and x position of each circle
@@ -59,8 +58,8 @@ def draw():
             # a dictionary entry would look like currentFrameCircleYCoordinates[x] = [y]
         x += 2 #move the next circle to the left a little
     #the next two lines are there so that on each frame the notes will only move 2 pixels to the left
-    x -= 2* len(song1Data) #reset x to what it was before the for loop
-    x += 2 # the circles will slowly go across the screen
+     #reset x to what it was before the for loop
+    drawLoopIncrement += 2 # the circles will slowly go across the screen
     
     #if mouse is pressed, the circle will be red, the breath meter will drain and the score will increase assuming a note is also wherever the red circle is. 
     #otherwise the circle will be blue and the breath will reset (assuming not in a gameover state). 
@@ -80,7 +79,7 @@ def draw():
         
     if breath <= 0:
         #when the breath reaches zero, it resets all the variables aside for highScore and put the game into a game over state.
-        x = 0 - len(song1Data) #moves all the notes way off screen
+        drawLoopIncrement = 0 - len(song1Data) #moves all the notes way off screen
         score = 0 #resets the score
         breath = 0 #breath won't underflow
         fill(0,0,0)
@@ -90,9 +89,9 @@ def draw():
         highScore = score
         
 def keyPressed():
-    global x, score, breath, startingBreath, song1Data
+    global drawLoopIncrement, score, breath, startingBreath, song1Data
     if key == "r":
         #reset all the variables (aside for highScore)
-        x = 0
+        drawLoopIncrement = 0
         score = 0
         breath = startingBreath
